@@ -1,17 +1,17 @@
 class Solution {
     public int findLHS(int[] nums) {
+        Arrays.sort(nums);
         int ans=0;
-        boolean hasNum = false;
         for (int i=0;i<nums.length;i++) {
-            int plusOne = 0;
-            int minusOne = 0;
-            for (int j=0;j<nums.length;j++) {
-                if (nums[i]==nums[j]) {plusOne++;minusOne++;}
-                else if (nums[i]-nums[j]==1) {plusOne++;hasNum = true;}
-                else if (nums[i]-nums[j]==-1) {minusOne++;hasNum = true;}
+            boolean hasNum = false;
+            int j=i+1;
+            while (j<nums.length && (nums[j]==nums[i] || nums[j]-1==nums[i])) {
+                if (nums[j]-1==nums[i]) hasNum = true;
+                j++;
             }
-            ans = Math.max(ans, Math.max(plusOne,minusOne));
+            if (hasNum) ans = Math.max(ans, j-i);
+            //System.out.println(ans);
         }
-        return hasNum? ans : 0;
+        return ans;
     }
 }
